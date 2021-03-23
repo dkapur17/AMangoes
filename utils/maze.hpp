@@ -9,6 +9,9 @@ struct MazeVertex
 {
     int x;
     int y;
+    int R;
+    int G;
+    int B;
 };
 
 class Cell

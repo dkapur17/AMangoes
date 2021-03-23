@@ -118,23 +118,23 @@ std::vector<MazeVertex> Maze::getVertices()
         {
             if (c.walls["top"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width});
+                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width, 255, 255, 255});
+                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width, 255, 255, 255});
             }
             if (c.walls["bottom"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width});
+                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width, 255, 255, 255});
+                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width, 255, 255, 255});
             }
             if (c.walls["left"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width});
-                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width});
+                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width, 255, 255, 255});
+                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width, 255, 255, 255});
             }
             if (c.walls["right"])
             {
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width});
+                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width, 255, 255, 255});
+                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width, 255, 255, 255});
             }
         }
     }

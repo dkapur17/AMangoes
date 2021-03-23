@@ -21,10 +21,12 @@ void MazeRenderer::initRenderData()
     glBindVertexArray(this->VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(vertices[0]), &(vertices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(MazeVertex), &(vertices[0]), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, 2 * sizeof(int), (void *)0);
+    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, sizeof(MazeVertex), (void *)offsetof(MazeVertex, x));
     glEnableVertexAttribArray(0);
+    glVertexAttribPointer(1, 3, GL_INT, GL_FALSE, sizeof(MazeVertex), (void *)offsetof(MazeVertex, R));
+    glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 }
