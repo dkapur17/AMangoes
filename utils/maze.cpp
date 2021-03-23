@@ -13,13 +13,13 @@ Cell::Cell(int iVal, int jVal, int wVal, int hVal)
     walls["right"] = true;
 }
 
-Maze::Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight) : rows(rowsVal), cols(colsVal)
+Maze::Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight, int cellDim) : rows(rowsVal), cols(colsVal)
 {
     for (int i = 0; i < rows; i++)
     {
         std::vector<Cell> row;
         for (int j = 0; j < cols; j++)
-            row.push_back(Cell(i, j, screenWidth / cols, screenHeight / rows));
+            row.push_back(Cell(i, j, cellDim, cellDim));
         grid.push_back(row);
     }
     srand(time(0));

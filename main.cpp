@@ -11,7 +11,7 @@
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
 
-Game AMangoes(SCREEN_WIDTH, SCREEN_HEIGHT, 25, 25);
+Game AMangoes(SCREEN_WIDTH, SCREEN_HEIGHT, 25, 25, 50);
 
 int main(int argc, char **argv)
 {

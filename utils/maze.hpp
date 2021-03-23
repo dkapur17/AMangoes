@@ -31,7 +31,7 @@ public:
     unsigned int rows;
     unsigned int cols;
 
-    Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight);
+    Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight, int cellDim);
     void Generate();
     std::vector<MazeVertex> getVertices();
 

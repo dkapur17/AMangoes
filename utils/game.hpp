@@ -9,6 +9,7 @@
 #include <vector>
 
 #include "maze.hpp"
+#include "player.hpp"
 
 enum GameState
 {
@@ -24,8 +25,9 @@ public:
     std::vector<bool> Keys;
     unsigned int Width, Height;
     Maze maze;
+    Player player;
 
-    Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols);
+    Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim);
     ~Game();
 
     void Init();
