@@ -22,15 +22,15 @@ std::vector<Vertex> Imposter::getVertices()
             Vertex{-0.6, 0.7, Rb, Gb, Bb},
             Vertex{-0.6, -0.5, Rb, Gb, Bb},
             // Right Leg
-            Vertex{0.6, 0.5, Rb, Gb, Bb},
+            Vertex{0.6, 0.7, Rb, Gb, Bb},
             Vertex{0.6, 1.0, Rb, Gb, Bb},
             Vertex{0.2, 1.0, Rb, Gb, Bb},
-            Vertex{0.2, 0.25, Rb, Gb, Bb},
+            Vertex{0.2, 0.7, Rb, Gb, Bb},
             // Left Leg
-            Vertex{-0.6, 0.5, Rb, Gb, Bb},
+            Vertex{-0.6, 0.7, Rb, Gb, Bb},
             Vertex{-0.6, 1.0, Rb, Gb, Bb},
             Vertex{-0.2, 1.0, Rb, Gb, Bb},
-            Vertex{-0.2, 0.25, Rb, Gb, Bb},
+            Vertex{-0.2, 0.7, Rb, Gb, Bb},
         };
     // Head
     for (float x = -0.6; x <= 0.61; x += 0.012)

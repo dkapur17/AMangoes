@@ -4,9 +4,10 @@
 #include "character_renderer.hpp"
 #include "vertex.hpp"
 
-CharacterRenderer::CharacterRenderer(Shader &&shader, std::vector<Vertex> playerVertices, std::vector<Vertex> imposterVertices)
+CharacterRenderer::CharacterRenderer(Shader &&playerShader, Shader &&imposterShader, std::vector<Vertex> playerVertices, std::vector<Vertex> imposterVertices)
 {
-    this->shader = shader;
+    this->playerShader = playerShader;
+    this->imposterShader = imposterShader;
     this->initRenderData(playerVertices, imposterVertices);
 }
 
@@ -55,8 +56,8 @@ void CharacterRenderer::DrawPlayer()
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::scale(model, glm::vec3(20.0f, 20.0f, 1.0f));
 
-    this->shader.Use();
-    this->shader.SetMatrix4("model", model);
+    this->playerShader.Use();
+    this->playerShader.SetMatrix4("model", model);
     glBindVertexArray(this->PlayerVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
@@ -66,14 +67,15 @@ void CharacterRenderer::DrawPlayer()
     glBindVertexArray(0);
 }
 
-void CharacterRenderer::DrawImposter(glm::vec3 playerPos, glm::vec3 imposterPos)
+void CharacterRenderer::DrawImposter(glm::vec3 playerPos, glm::vec3 imposterPos, bool lightsOn)
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, -playerPos);
     model = glm::translate(model, imposterPos);
     model = glm::scale(model, glm::vec3(20.0f, 20.0f, 1.0f));
-    this->shader.Use();
-    this->shader.SetMatrix4("model", model);
+    this->imposterShader.Use();
+    this->imposterShader.SetMatrix4("model", model);
+    this->imposterShader.SetInteger("lights", lightsOn);
     glBindVertexArray(this->ImposterVAO);
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     glDrawArrays(GL_TRIANGLE_FAN, 4, 4);
