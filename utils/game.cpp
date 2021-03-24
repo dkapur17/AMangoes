@@ -1,5 +1,6 @@
 #include "game.hpp"
 #include "resource_manager.hpp"
+#include <iostream>
 
 Game::Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), lights(true),

@@ -1,23 +1,27 @@
 #include "imposter.hpp"
-#include <cstdlib>
 #include <iostream>
 #include <stack>
 #include <queue>
 #include <map>
 #include <utility>
+#include <algorithm>
+#include <random>
 
 Imposter::Imposter(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int rows, int cols)
     : stepSize(stepSizeVal), Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass)
 {
-    srand(time(0));
-    i = rand() % rows;
-    j = rand() % cols;
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<> rowDist(0, rows - 1);
+    std::uniform_int_distribution<> colDist(0, cols - 1);
+    i = rowDist(rng);
+    j = colDist(rng);
 
     position = glm::vec3((2 * j + 1) * stepSize / 2, (2 * i + 1) * stepSize / 2, 0);
 }
 void Imposter::Move(char dir, float dt)
 {
-    int imposterSpeed = 3;
+    float imposterSpeed = 3.0;
     if (dir == 'R')
     {
         if (xStep < 0)

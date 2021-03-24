@@ -1,5 +1,38 @@
-main: main.cpp lib/glad.c utils/character_renderer.cpp utils/game.cpp utils/imposter.cpp utils/maze_renderer.cpp utils/maze.cpp utils/player.cpp utils/resource_manager.cpp utils/shader.cpp
-		g++ main.cpp lib/glad.c utils/character_renderer.cpp utils/game.cpp utils/imposter.cpp utils/maze_renderer.cpp utils/maze.cpp utils/player.cpp utils/resource_manager.cpp utils/shader.cpp -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+main: obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/resource_manager.o obj/shader.o
+	mv *.o ./obj | true
+	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/resource_manager.o obj/shader.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	chmod +x a.out
+
+obj/main.o: main.cpp
+	g++ -c main.cpp
+
+obj/glad.o: lib/glad.c
+	g++ -c lib/glad.c
+
+obj/character_renderer.o: utils/character_renderer.cpp
+	g++ -c utils/character_renderer.cpp
+
+obj/game.o: utils/game.cpp
+	g++ -c utils/game.cpp
+
+obj/imposter.o: utils/imposter.cpp
+	g++ -c utils/imposter.cpp
+
+obj/maze.o: utils/maze.cpp
+	g++ -c utils/maze.cpp
+
+obj/maze_renderer.o: utils/maze_renderer.cpp
+	g++ -c utils/maze_renderer.cpp
+
+obj/player.o: utils/player.cpp
+	g++ -c utils/player.cpp
+
+obj/resource_manager.o: utils/resource_manager.cpp
+	g++ -c utils/resource_manager.cpp
+
+obj/shader.o: utils/shader.cpp
+	g++ -c utils/shader.cpp
 
 clean:
-	rm a.out
+	rm -r ./obj/*.o
+	rm ./a.out

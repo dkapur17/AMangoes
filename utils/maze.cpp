@@ -2,6 +2,9 @@
 #include <stack>
 #include <cstdlib>
 #include <ctime>
+#include <string>
+#include <random>
+#include <algorithm>
 #include "maze.hpp"
 
 Cell::Cell(int iVal, int jVal, int wVal, int hVal)
@@ -22,13 +25,17 @@ Maze::Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth,
             row.push_back(Cell(i, j, cellDim, cellDim));
         grid.push_back(row);
     }
-    srand(time(0));
 }
 
 void Maze::Generate()
 {
-    int startRow = rand() % rows;
-    int startCol = rand() % cols;
+    std::random_device rd;
+    std::mt19937 rng(rd());
+    std::uniform_int_distribution<> rowDist(0, rows - 1);
+    std::uniform_int_distribution<> colDist(0, cols - 1);
+    int startRow = rowDist(rng);
+    int startCol = colDist(rng);
+
     Cell *current = &grid[startRow][startCol];
     current->visited = true;
     std::stack<Cell *> s;
@@ -51,11 +58,36 @@ void Maze::Generate()
         }
     }
 
-    
+    // Introduce Cycles
+    for (int i = 0; i < rows; i++)
+        for (int j = 0; j < cols; j++)
+        {
+            Cell *current = &grid[i][j];
+            std::random_device rd;
+            std::mt19937 rng(rd());
+            std::uniform_real_distribution<> dist(0.0f, 1.0f);
+            float breakWallProb = dist(rng);
+            if (breakWallProb <= 0.05)
+            {
+                std::vector<Cell *> walledNeighbours;
+                if (i != 0 && current->walls["top"])
+                    walledNeighbours.push_back(&grid[i - 1][j]);
+                if (i != rows - 1 && current->walls["bottom"])
+                    walledNeighbours.push_back(&grid[i + 1][j]);
+                if (j != 0 && current->walls["left"])
+                    walledNeighbours.push_back(&grid[i][j - 1]);
+                if (j != cols - 1 && current->walls["right"])
+                    walledNeighbours.push_back(&grid[i][j + 1]);
 
-    for (std::vector<Cell> &row : grid)
-        for (Cell &c : row)
-            c.visited = false;
+                if (walledNeighbours.size())
+                {
+                    std::default_random_engine re(rd());
+                    std::shuffle(std::begin(walledNeighbours), std::end(walledNeighbours), re);
+                    removeWalls(current, walledNeighbours[0]);
+                }
+            }
+            current->visited = false;
+        }
 }
 
 void Maze::removeWalls(Cell *current, Cell *next)
@@ -108,7 +140,10 @@ Cell *Maze::checkNeighbours(Cell *current)
 
     if (neighbours.size())
     {
-        int index = rand() % neighbours.size();
+        std::random_device rd;
+        std::mt19937 rng(rd());
+        std::uniform_int_distribution<> dist(0, neighbours.size() - 1);
+        int index = dist(rng);
         return neighbours[index];
     }
     return nullptr;
