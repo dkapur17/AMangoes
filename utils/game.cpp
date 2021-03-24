@@ -27,10 +27,6 @@ void Game::Init()
 
 void Game::ProcessInput(float dt)
 {
-}
-
-void Game::Update(float dt)
-{
     if (Keys[GLFW_KEY_RIGHT])
     {
         if (!maze.grid[player.i][player.j].walls["right"])
@@ -62,9 +58,14 @@ void Game::Update(float dt)
     }
 }
 
+void Game::Update(float dt)
+{
+    player.computeClosestWalls(maze);
+}
+
 void Game::Render()
 {
-    mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights);
+    mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights, player.topDist, player.leftDist, player.rightDist, player.bottomDist);
     characterRenderer->DrawCharacter();
 }
 

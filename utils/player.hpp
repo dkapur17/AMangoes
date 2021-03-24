@@ -4,6 +4,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 #include "vertex.hpp"
+#include "maze.hpp"
 
 class Player
 {
@@ -21,9 +22,15 @@ public:
     int Gg;
     int Bg;
 
+    float topDist;
+    float leftDist;
+    float rightDist;
+    float bottomDist;
+
     Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass);
     void Move(char dir, float dt);
     std::vector<Vertex> getVertices();
+    void computeClosestWalls(Maze maze);
 };
 
 #endif

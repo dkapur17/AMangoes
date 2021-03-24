@@ -5,7 +5,7 @@
 
 Player::Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass)
     : i(0), j(0), stepSize(stepSizeVal), position(glm::vec3(stepSizeVal / 2, stepSizeVal / 2, 0)), xStep(0.0f), yStep(0.0f),
-      Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass) {}
+      Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass), topDist(0), leftDist(0), rightDist(0), bottomDist(0) {}
 
 void Player::Move(char dir, float dt)
 {
@@ -91,4 +91,42 @@ std::vector<Vertex> Player::getVertices()
     vertices.push_back({-0.4, 0, Rg, Gg, Bg});
 
     return vertices;
+}
+
+void Player::computeClosestWalls(Maze maze)
+{
+    int wi, wj;
+    // Left wall
+    wj = 0;
+    for (int x = 0; x <= j; x++)
+        if (maze.grid[i][x].walls["left"])
+            wj = x;
+    leftDist = (j - wj + 0.5) * maze.grid[i][wj].width;
+
+    // Right wall
+    wj = maze.cols - 1;
+    for (int x = j; x < maze.cols; x++)
+        if (maze.grid[i][x].walls["right"])
+        {
+            wj = x;
+            break;
+        }
+    rightDist = (wj - j + 0.5) * maze.grid[i][wj].width;
+
+    // Top wall
+    wi = 0;
+    for (int y = 0; y <= i; y++)
+        if (maze.grid[y][j].walls["top"])
+            wi = y;
+    topDist = (i - wi + 0.5) * maze.grid[wi][j].width;
+
+    // Bottom wall
+    wi = maze.rows - 1;
+    for (int y = i; y < maze.rows; y++)
+        if (maze.grid[y][j].walls["bottom"])
+        {
+            wi = y;
+            break;
+        }
+    bottomDist = (wi - i + 0.5) * maze.grid[wi][j].width;
 }

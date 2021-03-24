@@ -10,7 +10,7 @@ uniform mat4 projection;
 
 void main()
 {
-    vertexPosition = projection * model * vec4(vertex.xy, 0.0, 1.0);
-    gl_Position = vertexPosition;
+    vertexPosition =  model * vec4(vertex.xy, 0.0, 1.0);
+    gl_Position = projection * vertexPosition;
     vertexColor = vec3(aColor.x/255.0f, aColor.y/255.0f, aColor.z/255.0f);
 }
