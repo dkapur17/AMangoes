@@ -59,6 +59,7 @@ void Game::ProcessInput(float dt)
 void Game::Update(float dt)
 {
     player.computeClosestWalls(maze);
+    imposter.computeStep(maze, player, dt);
 }
 
 void Game::Render()

@@ -51,6 +51,8 @@ void Maze::Generate()
         }
     }
 
+    
+
     for (std::vector<Cell> &row : grid)
         for (Cell &c : row)
             c.visited = false;
@@ -110,6 +112,21 @@ Cell *Maze::checkNeighbours(Cell *current)
         return neighbours[index];
     }
     return nullptr;
+}
+
+std::vector<Cell *> Maze::getNeighbours(Cell *current)
+{
+    std::vector<Cell *> neighbours;
+    if (current->i < rows - 1 && !current->walls["bottom"])
+        neighbours.push_back(&grid[current->i + 1][current->j]);
+    if (current->j < cols - 1 && !current->walls["right"])
+        neighbours.push_back(&grid[current->i][current->j + 1]);
+    if (current->i > 0 && !current->walls["top"])
+        neighbours.push_back(&grid[current->i - 1][current->j]);
+    if (current->j > 0 && !current->walls["left"])
+        neighbours.push_back(&grid[current->i][current->j - 1]);
+
+    return neighbours;
 }
 
 std::vector<Vertex> Maze::getVertices()

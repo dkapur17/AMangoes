@@ -30,6 +30,7 @@ public:
     Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight, int cellDim);
     void Generate();
     std::vector<Vertex> getVertices();
+    std::vector<Cell *> getNeighbours(Cell *current);
 
 private:
     Cell *checkNeighbours(Cell *current);

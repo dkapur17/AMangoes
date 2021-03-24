@@ -26,7 +26,7 @@ public:
     Imposter(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int rows, int cols);
     void Move(char dir, float dt);
     std::vector<Vertex> getVertices();
-    void computeStep(Maze maze, Player player);
+    void computeStep(Maze maze, Player player, float dt);
 };
 
 #endif
