@@ -5,14 +5,7 @@
 #include <string>
 #include <map>
 
-struct MazeVertex
-{
-    int x;
-    int y;
-    int R;
-    int G;
-    int B;
-};
+#include "vertex.hpp"
 
 class Cell
 {
@@ -36,7 +29,7 @@ public:
 
     Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth, unsigned int screenHeight, int cellDim);
     void Generate();
-    std::vector<MazeVertex> getVertices();
+    std::vector<Vertex> getVertices();
 
 private:
     Cell *checkNeighbours(Cell *current);

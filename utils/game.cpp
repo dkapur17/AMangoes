@@ -8,7 +8,7 @@ CharacterRenderer *characterRenderer;
 
 Game::Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), lights(true),
-      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim)), initiatedLightClick(false) {}
+      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255)), initiatedLightClick(false) {}
 
 Game::~Game() {}
 
@@ -22,7 +22,7 @@ void Game::Init()
     ResourceManager::GetShader("character").Use().SetMatrix4("projection", projection);
     maze.Generate();
     mazeRenderer = new MazeRenderer(ResourceManager::GetShader("maze"), maze.getVertices());
-    characterRenderer = new CharacterRenderer(ResourceManager::GetShader("character"));
+    characterRenderer = new CharacterRenderer(ResourceManager::GetShader("character"), player.getVertices());
 }
 
 void Game::ProcessInput(float dt)
@@ -65,7 +65,7 @@ void Game::Update(float dt)
 void Game::Render()
 {
     mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights);
-    characterRenderer->DrawCharacter(glm::vec3(1.0f, 0.0f, 0.0f));
+    characterRenderer->DrawCharacter();
 }
 
 void Game::toggleLights()

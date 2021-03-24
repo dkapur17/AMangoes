@@ -1,6 +1,6 @@
 #include "maze_renderer.hpp"
 
-MazeRenderer::MazeRenderer(Shader &&shader, std::vector<MazeVertex> vertices)
+MazeRenderer::MazeRenderer(Shader &&shader, std::vector<Vertex> vertices)
 {
     this->shader = shader;
     this->vertices = vertices;
@@ -21,11 +21,11 @@ void MazeRenderer::initRenderData()
     glBindVertexArray(this->VAO);
 
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
-    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(MazeVertex), &(vertices[0]), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &(vertices[0]), GL_STATIC_DRAW);
 
-    glVertexAttribPointer(0, 2, GL_INT, GL_FALSE, sizeof(MazeVertex), (void *)offsetof(MazeVertex, x));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, x));
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 3, GL_INT, GL_FALSE, sizeof(MazeVertex), (void *)offsetof(MazeVertex, R));
+    glVertexAttribPointer(1, 3, GL_INT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, R));
     glEnableVertexAttribArray(1);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);

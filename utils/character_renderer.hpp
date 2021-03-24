@@ -7,18 +7,19 @@
 #include <vector>
 
 #include "shader.hpp"
+#include "vertex.hpp"
 
 class CharacterRenderer
 {
 public:
-    CharacterRenderer(Shader &&shader);
+    CharacterRenderer(Shader &&shader, std::vector<Vertex> vertices);
     ~CharacterRenderer();
-    void DrawCharacter(glm::vec3 color);
+    void DrawCharacter();
 
 private:
     Shader shader;
     unsigned int VAO;
-    void initRenderData();
+    void initRenderData(std::vector<Vertex> vertices);
 };
 
 #endif

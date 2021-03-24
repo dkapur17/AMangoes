@@ -10,7 +10,7 @@ uniform vec3 playerPosition;
 
 void main()
 {
-    float illuminationFactor = 0.01;
+    float illuminationFactor = 0.008;
     float dist = pow(playerPosition.x-vertexPosition.x,2)+pow(playerPosition.y-vertexPosition.y,2);
     if(lights)
         color = vec4(vertexColor, lights);

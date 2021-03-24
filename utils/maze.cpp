@@ -50,6 +50,10 @@ void Maze::Generate()
             s.pop();
         }
     }
+
+    for (std::vector<Cell> &row : grid)
+        for (Cell &c : row)
+            c.visited = false;
 }
 
 void Maze::removeWalls(Cell *current, Cell *next)
@@ -108,9 +112,9 @@ Cell *Maze::checkNeighbours(Cell *current)
     return nullptr;
 }
 
-std::vector<MazeVertex> Maze::getVertices()
+std::vector<Vertex> Maze::getVertices()
 {
-    std::vector<MazeVertex> vertices;
+    std::vector<Vertex> vertices;
 
     for (auto row : grid)
     {
@@ -118,23 +122,23 @@ std::vector<MazeVertex> Maze::getVertices()
         {
             if (c.walls["top"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width, 255, 255, 255});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width, 255, 255, 255});
+                vertices.push_back(Vertex{(float)(c.j * c.height), (float)(c.i * c.width), 255, 255, 255});
+                vertices.push_back(Vertex{(float)((c.j + 1) * c.height), (float)(c.i * c.width), 255, 255, 255});
             }
             if (c.walls["bottom"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width, 255, 255, 255});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width, 255, 255, 255});
+                vertices.push_back(Vertex{(float)(c.j * c.height), (float)((c.i + 1) * c.width), 255, 255, 255});
+                vertices.push_back(Vertex{(float)((c.j + 1) * c.height), (float)((c.i + 1) * c.width), 255, 255, 255});
             }
             if (c.walls["left"])
             {
-                vertices.push_back(MazeVertex{c.j * c.height, c.i * c.width, 255, 255, 255});
-                vertices.push_back(MazeVertex{c.j * c.height, (c.i + 1) * c.width, 255, 255, 255});
+                vertices.push_back(Vertex{(float)(c.j * c.height), (float)(c.i * c.width), 255, 255, 255});
+                vertices.push_back(Vertex{(float)(c.j * c.height), (float)((c.i + 1) * c.width), 255, 255, 255});
             }
             if (c.walls["right"])
             {
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, c.i * c.width, 255, 255, 255});
-                vertices.push_back(MazeVertex{(c.j + 1) * c.height, (c.i + 1) * c.width, 255, 255, 255});
+                vertices.push_back(Vertex{(float)((c.j + 1) * c.height), (float)(c.i * c.width), 255, 255, 255});
+                vertices.push_back(Vertex{(float)((c.j + 1) * c.height), (float)((c.i + 1) * c.width), 255, 255, 255});
             }
         }
     }

@@ -2,6 +2,8 @@
 #define PLAYER_H
 
 #include <glm/glm.hpp>
+#include <vector>
+#include "vertex.hpp"
 
 class Player
 {
@@ -12,9 +14,16 @@ public:
     float yStep;
     float stepSize;
     glm::vec3 position;
+    int Rb;
+    int Gb;
+    int Bb;
+    int Rg;
+    int Gg;
+    int Bg;
 
-    Player(float stepSizeVal);
+    Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass);
     void Move(char dir, float dt);
+    std::vector<Vertex> getVertices();
 };
 
 #endif
