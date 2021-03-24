@@ -31,7 +31,7 @@ void MazeRenderer::initRenderData()
     glBindVertexArray(0);
 }
 
-void MazeRenderer::DrawMaze(glm::vec3 color, glm::vec3 playerPos)
+void MazeRenderer::DrawMaze(glm::vec3 color, glm::vec3 playerPos, bool lightsOn)
 {
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, -playerPos);
@@ -39,6 +39,7 @@ void MazeRenderer::DrawMaze(glm::vec3 color, glm::vec3 playerPos)
     this->shader.Use();
     this->shader.SetVector3f("mazeColor", color);
     this->shader.SetMatrix4("model", model);
+    this->shader.SetInteger("lights", lightsOn);
     glBindVertexArray(this->VAO);
     glDrawArrays(GL_LINES, 0, vertices.size());
     glBindVertexArray(0);

@@ -7,7 +7,8 @@ MazeRenderer *mazeRenderer;
 CharacterRenderer *characterRenderer;
 
 Game::Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim)
-    : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim)) {}
+    : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), lights(true),
+      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim)), initiatedLightClick(false) {}
 
 Game::~Game() {}
 
@@ -50,10 +51,24 @@ void Game::Update(float dt)
         if (!maze.grid[player.i][player.j].walls["bottom"])
             player.Move('D', dt);
     }
+    else if (Keys[GLFW_KEY_L])
+    {
+        initiatedLightClick = true;
+    }
+    if (!Keys[GLFW_KEY_L] && initiatedLightClick)
+    {
+        initiatedLightClick = false;
+        toggleLights();
+    }
 }
 
 void Game::Render()
 {
-    mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position);
+    mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights);
     characterRenderer->DrawCharacter(glm::vec3(1.0f, 0.0f, 0.0f));
+}
+
+void Game::toggleLights()
+{
+    lights = !lights;
 }

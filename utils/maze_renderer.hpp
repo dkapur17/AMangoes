@@ -15,7 +15,7 @@ public:
     std::vector<MazeVertex> vertices;
     MazeRenderer(Shader &&shader, std::vector<MazeVertex> vertices);
     ~MazeRenderer();
-    void DrawMaze(glm::vec3 color, glm::vec3 playerPos);
+    void DrawMaze(glm::vec3 color, glm::vec3 playerPos, bool lights);
 
 private:
     Shader shader;

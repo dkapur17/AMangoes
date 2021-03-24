@@ -34,6 +34,11 @@ public:
     void ProcessInput(float dt);
     void Update(float dt);
     void Render();
+    void toggleLights();
+
+private:
+    bool lights;
+    bool initiatedLightClick;
 };
 
 #endif
