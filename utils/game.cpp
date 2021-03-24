@@ -1,14 +1,12 @@
 #include "game.hpp"
 #include "resource_manager.hpp"
-#include "maze_renderer.hpp"
-#include "character_renderer.hpp"
-
-MazeRenderer *mazeRenderer;
-CharacterRenderer *characterRenderer;
 
 Game::Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), lights(true),
-      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255)), initiatedLightClick(false) {}
+      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255)),
+      imposter(Imposter((float)cellDim, 255, 0, 0, 240, 248, 255, rows, cols)),
+      initiatedLightClick(false),
+      mazeRenderer(nullptr), characterRenderer(nullptr) {}
 
 Game::~Game() {}
 
@@ -22,7 +20,7 @@ void Game::Init()
     ResourceManager::GetShader("character").Use().SetMatrix4("projection", projection);
     maze.Generate();
     mazeRenderer = new MazeRenderer(ResourceManager::GetShader("maze"), maze.getVertices());
-    characterRenderer = new CharacterRenderer(ResourceManager::GetShader("character"), player.getVertices());
+    characterRenderer = new CharacterRenderer(ResourceManager::GetShader("character"), player.getVertices(), imposter.getVertices());
 }
 
 void Game::ProcessInput(float dt)
@@ -66,7 +64,8 @@ void Game::Update(float dt)
 void Game::Render()
 {
     mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights, player.topDist, player.leftDist, player.rightDist, player.bottomDist);
-    characterRenderer->DrawCharacter();
+    characterRenderer->DrawPlayer();
+    characterRenderer->DrawImposter(player.position, imposter.position);
 }
 
 void Game::toggleLights()

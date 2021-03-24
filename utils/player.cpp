@@ -85,10 +85,10 @@ std::vector<Vertex> Player::getVertices()
         vertices.push_back(Vertex{x, y, Rb, Gb, Bb});
     }
     // Glasses
-    vertices.push_back({-0.4, -0.60, Rg, Gg, Bg});
-    vertices.push_back({0.4, -0.60, Rg, Gg, Bg});
-    vertices.push_back({0.4, 0, Rg, Gg, Bg});
-    vertices.push_back({-0.4, 0, Rg, Gg, Bg});
+    vertices.push_back(Vertex{-0.4, -0.60, Rg, Gg, Bg});
+    vertices.push_back(Vertex{0.4, -0.60, Rg, Gg, Bg});
+    vertices.push_back(Vertex{0.4, 0, Rg, Gg, Bg});
+    vertices.push_back(Vertex{-0.4, 0, Rg, Gg, Bg});
 
     return vertices;
 }

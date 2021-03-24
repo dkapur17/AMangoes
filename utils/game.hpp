@@ -8,8 +8,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <vector>
 
+#include "maze_renderer.hpp"
+#include "character_renderer.hpp"
 #include "maze.hpp"
 #include "player.hpp"
+#include "imposter.hpp"
 
 enum GameState
 {
@@ -24,8 +27,11 @@ public:
     GameState State;
     std::vector<bool> Keys;
     unsigned int Width, Height;
+    MazeRenderer *mazeRenderer;
+    CharacterRenderer *characterRenderer;
     Maze maze;
     Player player;
+    Imposter imposter;
 
     Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim);
     ~Game();

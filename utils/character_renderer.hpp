@@ -12,14 +12,16 @@
 class CharacterRenderer
 {
 public:
-    CharacterRenderer(Shader &&shader, std::vector<Vertex> vertices);
+    CharacterRenderer(Shader &&shader, std::vector<Vertex> playerVertices, std::vector<Vertex> imposterVertices);
     ~CharacterRenderer();
-    void DrawCharacter();
+    void DrawPlayer();
+    void DrawImposter(glm::vec3 playerPos, glm::vec3 imposterPos);
 
 private:
     Shader shader;
-    unsigned int VAO;
-    void initRenderData(std::vector<Vertex> vertices);
+    unsigned int PlayerVAO;
+    unsigned int ImposterVAO;
+    void initRenderData(std::vector<Vertex> vertices, std::vector<Vertex> imposterVertices);
 };
 
 #endif
