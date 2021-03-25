@@ -22,6 +22,7 @@ public:
     int Rg;
     int Gg;
     int Bg;
+    bool active;
 
     Imposter(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int rows, int cols);
     void Move(char dir, float dt);

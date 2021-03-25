@@ -16,8 +16,9 @@ public:
     int G;
     int B;
     bool completed;
+    bool isFinishTile;
 
-    Task(int cellDimVal, int RVal, int GVal, int BVal);
+    Task(int cellDimVal, int RVal, int GVal, int BVal, int rows, int cols, bool isFinish);
     std::vector<Vertex> getVertices();
 };
 

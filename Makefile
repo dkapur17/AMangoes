@@ -1,7 +1,7 @@
-main: obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o
+main: obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o
 	mkdir -p obj
 	mv *.o ./obj | true
-	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 	chmod +x a.out
 
 obj/main.o: main.cpp
@@ -12,6 +12,9 @@ obj/glad.o: lib/glad.c
 
 obj/character_renderer.o: utils/character_renderer.cpp
 	g++ -c utils/character_renderer.cpp
+
+obj/collectables.o: utils/collectables.cpp
+	g++ -c utils/collectables.cpp
 
 obj/game.o: utils/game.cpp
 	g++ -c utils/game.cpp
