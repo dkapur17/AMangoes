@@ -1,4 +1,5 @@
 main: obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o
+	mkdir -p obj
 	mv *.o ./obj | true
 	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 	chmod +x a.out

@@ -5,7 +5,8 @@
 
 Player::Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass)
     : i(0), j(0), stepSize(stepSizeVal), position(glm::vec3(stepSizeVal / 2, stepSizeVal / 2, 0)), xStep(0.0f), yStep(0.0f),
-      Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass), topDist(0), leftDist(0), rightDist(0), bottomDist(0) {}
+      Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass), topDist(0), leftDist(0), rightDist(0), bottomDist(0),
+      lives(3), score(0), tasksCompleted(0) {}
 
 void Player::Move(char dir, float dt)
 {

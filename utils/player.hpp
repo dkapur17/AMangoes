@@ -21,6 +21,9 @@ public:
     int Rg;
     int Gg;
     int Bg;
+    int lives;
+    int score;
+    int tasksCompleted;
 
     float topDist;
     float leftDist;

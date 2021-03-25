@@ -59,8 +59,23 @@ void Game::ProcessInput(float dt)
 
 void Game::Update(float dt)
 {
+    if (player.lives < 1)
+    {
+        std::cout << "Game Lost\n";
+        State = GAME_LOST;
+    }
+    if (player.i == maze.rows - 1 && player.j == maze.cols - 1 && player.tasksCompleted == 2)
+    {
+        std::cout << "Game Won\n";
+        State = GAME_WON;
+    }
     player.computeClosestWalls(maze);
     imposter.computeStep(maze, player, dt);
+    if (imposter.i == player.i && imposter.j == player.j)
+    {
+        std::cout << "Game Lost\n";
+        State = GAME_LOST;
+    }
 }
 
 void Game::Render()

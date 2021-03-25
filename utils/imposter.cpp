@@ -4,18 +4,13 @@
 #include <queue>
 #include <map>
 #include <utility>
-#include <algorithm>
-#include <random>
+#include "random_engine.hpp"
 
 Imposter::Imposter(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int rows, int cols)
     : stepSize(stepSizeVal), Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass)
 {
-    std::random_device rd;
-    std::mt19937 rng(rd());
-    std::uniform_int_distribution<> rowDist(0, rows - 1);
-    std::uniform_int_distribution<> colDist(0, cols - 1);
-    i = rowDist(rng);
-    j = colDist(rng);
+    i = RandomEngine::randomInt(0, rows - 1);
+    j = RandomEngine::randomInt(0, cols - 1);
 
     position = glm::vec3((2 * j + 1) * stepSize / 2, (2 * i + 1) * stepSize / 2, 0);
 }

@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
-    while (!glfwWindowShouldClose(window))
+    while (!glfwWindowShouldClose(window) && AMangoes.State == GAME_ACTIVE)
     {
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
