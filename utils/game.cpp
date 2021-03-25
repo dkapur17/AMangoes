@@ -1,6 +1,9 @@
 #include "game.hpp"
 #include "resource_manager.hpp"
+#include "tile_renderer.hpp"
 #include <iostream>
+
+TileRenderer *vaporizeTileRenderer = nullptr;
 
 Game::Game(unsigned int width, unsigned int height, unsigned int rows, unsigned int cols, unsigned int cellDim)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), Width(width), Height(height), lights(true),
@@ -22,6 +25,12 @@ void Game::Init()
     maze.Generate();
     mazeRenderer = new MazeRenderer(ResourceManager::GetShader("env"), maze.getVertices());
     characterRenderer = new CharacterRenderer(ResourceManager::GetShader("character"), ResourceManager::GetShader("env"), player.getVertices(), imposter.getVertices());
+    std::vector<Vertex> vertices = {
+        Vertex{24, 24, 255, 0, 255},
+        Vertex{-24, 24, 255, 0, 255},
+        Vertex{-24, -24, 255, 0, 255},
+        Vertex{24, -24, 255, 0, 255}};
+    vaporizeTileRenderer = new TileRenderer(ResourceManager::GetShader("env"), vertices);
 }
 
 void Game::ProcessInput(float dt)
@@ -81,6 +90,7 @@ void Game::Update(float dt)
 void Game::Render()
 {
     mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights, player.topDist, player.leftDist, player.rightDist, player.bottomDist);
+    vaporizeTileRenderer->DrawTile(player.position, glm::vec3(25, 25, 0), lights);
     characterRenderer->DrawPlayer();
     characterRenderer->DrawImposter(player.position, imposter.position, lights);
 }
