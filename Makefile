@@ -1,6 +1,6 @@
-main: obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/resource_manager.o obj/shader.o
+main: obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o
 	mv *.o ./obj | true
-	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/resource_manager.o obj/shader.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 	chmod +x a.out
 
 obj/main.o: main.cpp
@@ -26,6 +26,9 @@ obj/maze_renderer.o: utils/maze_renderer.cpp
 
 obj/player.o: utils/player.cpp
 	g++ -c utils/player.cpp
+
+obj/random_engine.o: utils/random_engine.cpp
+	g++ -c utils/random_engine.cpp
 
 obj/resource_manager.o: utils/resource_manager.cpp
 	g++ -c utils/resource_manager.cpp

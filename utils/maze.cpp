@@ -3,9 +3,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
-#include <random>
-#include <algorithm>
+
 #include "maze.hpp"
+#include "random_engine.hpp"
 
 Cell::Cell(int iVal, int jVal, int wVal, int hVal)
     : i(iVal), j(jVal), width(wVal), height(hVal), visited(false)
@@ -29,12 +29,8 @@ Maze::Maze(unsigned int rowsVal, unsigned int colsVal, unsigned int screenWidth,
 
 void Maze::Generate()
 {
-    std::random_device rd;
-    std::mt19937 rng(rd());
-    std::uniform_int_distribution<> rowDist(0, rows - 1);
-    std::uniform_int_distribution<> colDist(0, cols - 1);
-    int startRow = rowDist(rng);
-    int startCol = colDist(rng);
+    int startRow = RandomEngine::randomInt(0, rows - 1);
+    int startCol = RandomEngine::randomInt(0, cols - 1);
 
     Cell *current = &grid[startRow][startCol];
     current->visited = true;
@@ -63,10 +59,7 @@ void Maze::Generate()
         for (int j = 0; j < cols; j++)
         {
             Cell *current = &grid[i][j];
-            std::random_device rd;
-            std::mt19937 rng(rd());
-            std::uniform_real_distribution<> dist(0.0f, 1.0f);
-            float breakWallProb = dist(rng);
+            float breakWallProb = RandomEngine::randomFloat(0, 1);
             if (breakWallProb <= 0.05)
             {
                 std::vector<Cell *> walledNeighbours;
@@ -81,6 +74,7 @@ void Maze::Generate()
 
                 if (walledNeighbours.size())
                 {
+                    std::random_device rd;
                     std::default_random_engine re(rd());
                     std::shuffle(std::begin(walledNeighbours), std::end(walledNeighbours), re);
                     removeWalls(current, walledNeighbours[0]);
@@ -140,10 +134,7 @@ Cell *Maze::checkNeighbours(Cell *current)
 
     if (neighbours.size())
     {
-        std::random_device rd;
-        std::mt19937 rng(rd());
-        std::uniform_int_distribution<> dist(0, neighbours.size() - 1);
-        int index = dist(rng);
+        int index = RandomEngine::randomInt(0, neighbours.size() - 1);
         return neighbours[index];
     }
     return nullptr;
