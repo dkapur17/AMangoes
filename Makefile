@@ -1,7 +1,7 @@
-main: obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o
+main: obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/item_renderer.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o
 	mkdir -p obj
 	mv *.o ./obj | true
-	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/item_renderer.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
 	chmod +x a.out
 
 obj/main.o: main.cpp
@@ -21,6 +21,9 @@ obj/game.o: utils/game.cpp
 
 obj/imposter.o: utils/imposter.cpp
 	g++ -c utils/imposter.cpp
+
+obj/item_renderer.o: utils/item_renderer.cpp
+	g++ -c utils/item_renderer.cpp
 
 obj/maze.o: utils/maze.cpp
 	g++ -c utils/maze.cpp

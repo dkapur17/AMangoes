@@ -5,6 +5,7 @@
 #include "character_renderer.hpp"
 #include "task.hpp"
 #include "collectables.hpp"
+#include "item_renderer.hpp"
 #include <iostream>
 
 MazeRenderer *mazeRenderer = nullptr;
@@ -12,16 +13,16 @@ CharacterRenderer *characterRenderer = nullptr;
 TileRenderer *vaporizeTileRenderer = nullptr;
 TileRenderer *releaseTileRenderer = nullptr;
 TileRenderer *finishTileRenderer = nullptr;
+ItemRenderer *itemRenderer = nullptr;
 
 Task *vaporizeImposter = nullptr;
 Task *releaseItems = nullptr;
 Task *finishLine = nullptr;
 
 CollectablesContainer *container = nullptr;
-
 Game::Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, unsigned int colsVal, unsigned int cellDimVal)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), width(widthVal), height(heightVal), rows(rowsVal), cols(colsVal), cellDim(cellDimVal), lights(true),
-      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255)),
+      maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255, 5)),
       imposter(Imposter((float)cellDim, 255, 0, 0, 240, 248, 255, rows, cols)),
       initiatedLightClick(false)
 {
@@ -39,6 +40,7 @@ Game::~Game()
     delete characterRenderer;
     delete vaporizeTileRenderer;
     delete releaseTileRenderer;
+    delete itemRenderer;
 
     // Tasks
     delete vaporizeImposter;
@@ -62,6 +64,7 @@ void Game::Init()
     vaporizeTileRenderer = new TileRenderer(ResourceManager::GetShader("env"), vaporizeImposter->getVertices());
     releaseTileRenderer = new TileRenderer(ResourceManager::GetShader("env"), releaseItems->getVertices());
     finishTileRenderer = new TileRenderer(ResourceManager::GetShader("env"), finishLine->getVertices());
+    itemRenderer = new ItemRenderer(ResourceManager::GetShader("env"), container->gems[0].getVertices(), container->bombs[0].getVertices());
 }
 
 void Game::ProcessInput(float dt)
@@ -99,14 +102,30 @@ void Game::ProcessInput(float dt)
 
 void Game::Update(float dt)
 {
+    if (container->collectablesReleased)
+    {
+        for (Gem &gem : container->gems)
+            if (!gem.collected && player.i == gem.i && player.j == gem.j)
+            {
+                gem.collected = true;
+                player.score++;
+            }
+
+        for (Bomb &bomb : container->bombs)
+            if (!bomb.collected && player.i == bomb.i && player.j == bomb.j)
+            {
+                bomb.collected = true;
+                player.lives--;
+            }
+    }
     if (player.lives < 1)
     {
-        std::cout << "Game Lost\n";
+        std::cout << "Game Lost\n" << "Score: " << player.score << "\n";
         State = GAME_LOST;
     }
     if (player.i == finishLine->i && player.j == finishLine->j && player.tasksCompleted == 2)
     {
-        std::cout << "Game Won\n";
+        std::cout << "Game Won\n" << "Score: " << player.score << "\n";
         State = GAME_WON;
     }
     if (player.i == vaporizeImposter->i && player.j == vaporizeImposter->j && imposter.active)
@@ -125,7 +144,7 @@ void Game::Update(float dt)
         imposter.computeStep(maze, player, dt);
         if (imposter.i == player.i && imposter.j == player.j)
         {
-            std::cout << "Game Lost\n";
+            std::cout << "Game Lost\n" << "Score: " << player.score << "\n";
             State = GAME_LOST;
         }
     }
@@ -140,6 +159,15 @@ void Game::Render()
         releaseTileRenderer->DrawTile(player.position, releaseItems->position, lights);
     if (player.tasksCompleted == 2)
         finishTileRenderer->DrawTile(player.position, finishLine->position, lights);
+    if (container->collectablesReleased)
+    {
+        for (Gem gem : container->gems)
+            if (!gem.collected)
+                itemRenderer->DrawGem(player.position, gem.position, lights);
+        for (Bomb bomb : container->bombs)
+            if (!bomb.collected)
+                itemRenderer->DrawBomb(player.position, bomb.position, lights);
+    }
     characterRenderer->DrawPlayer();
     if (imposter.active)
         characterRenderer->DrawImposter(player.position, imposter.position, lights);

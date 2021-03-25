@@ -30,7 +30,7 @@ public:
     float rightDist;
     float bottomDist;
 
-    Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass);
+    Player(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int maxLives);
     void Move(char dir, float dt);
     std::vector<Vertex> getVertices();
     void computeClosestWalls(Maze maze);

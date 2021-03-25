@@ -56,7 +56,6 @@ public:
     std::vector<Bomb> bombs;
 
     CollectablesContainer(int rowsVal, int colsVal, int cellDimVal, int gemCountVal, int bombCountVal);
-    void releaseItems();
 };
 
 #endif
