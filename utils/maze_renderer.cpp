@@ -1,4 +1,5 @@
 #include "maze_renderer.hpp"
+#include <iostream>
 
 MazeRenderer::MazeRenderer(Shader &&shader, std::vector<Vertex> vertices)
 {
@@ -7,10 +8,7 @@ MazeRenderer::MazeRenderer(Shader &&shader, std::vector<Vertex> vertices)
     this->initRenderData();
 }
 
-MazeRenderer::~MazeRenderer()
-{
-    glDeleteVertexArrays(1, &this->VAO);
-}
+MazeRenderer::~MazeRenderer() {}
 
 void MazeRenderer::initRenderData()
 {

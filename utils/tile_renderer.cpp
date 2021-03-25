@@ -7,10 +7,7 @@ TileRenderer::TileRenderer(Shader &&shader, std::vector<Vertex> vertices)
     this->initRenderData();
 }
 
-TileRenderer::~TileRenderer()
-{
-    glDeleteVertexArrays(1, &this->VAO);
-}
+TileRenderer::~TileRenderer() {}
 
 void TileRenderer::initRenderData()
 {

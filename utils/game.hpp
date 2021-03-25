@@ -10,6 +10,7 @@
 
 #include "maze_renderer.hpp"
 #include "character_renderer.hpp"
+#include "tile_renderer.hpp"
 #include "maze.hpp"
 #include "player.hpp"
 #include "imposter.hpp"
@@ -29,6 +30,7 @@ public:
     unsigned int Width, Height;
     MazeRenderer *mazeRenderer;
     CharacterRenderer *characterRenderer;
+    TileRenderer *vaporizeTileRenderer;
     Maze maze;
     Player player;
     Imposter imposter;

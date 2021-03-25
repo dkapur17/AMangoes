@@ -11,10 +11,7 @@ CharacterRenderer::CharacterRenderer(Shader &&playerShader, Shader &&imposterSha
     this->initRenderData(playerVertices, imposterVertices);
 }
 
-CharacterRenderer::~CharacterRenderer()
-{
-    glDeleteVertexArrays(1, &this->PlayerVAO);
-}
+CharacterRenderer::~CharacterRenderer(){}
 
 void CharacterRenderer::initRenderData(std::vector<Vertex> playerVertices, std::vector<Vertex> imposterVertices)
 {
