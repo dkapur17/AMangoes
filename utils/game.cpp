@@ -29,7 +29,7 @@ Game::Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, 
     releaseItems = new Task(cellDim, 0, 117, 117, rows, cols, false);
     finishLine = new Task(cellDim, 0, 191, 255, rows, cols, true);
 
-    container = new CollectablesContainer();
+    container = new CollectablesContainer(rows, cols, cellDim, 10, 10);
 }
 
 Game::~Game()
@@ -134,8 +134,10 @@ void Game::Update(float dt)
 void Game::Render()
 {
     mazeRenderer->DrawMaze(glm::vec3(1.0f, 1.0f, 1.0f), player.position, lights, player.topDist, player.leftDist, player.rightDist, player.bottomDist);
-    vaporizeTileRenderer->DrawTile(player.position, vaporizeImposter->position, lights);
-    releaseTileRenderer->DrawTile(player.position, releaseItems->position, lights);
+    if (imposter.active)
+        vaporizeTileRenderer->DrawTile(player.position, vaporizeImposter->position, lights);
+    if (!container->collectablesReleased)
+        releaseTileRenderer->DrawTile(player.position, releaseItems->position, lights);
     if (player.tasksCompleted == 2)
         finishTileRenderer->DrawTile(player.position, finishLine->position, lights);
     characterRenderer->DrawPlayer();
