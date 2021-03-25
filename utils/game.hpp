@@ -24,23 +24,24 @@ class Game
 public:
     GameState State;
     std::vector<bool> Keys;
-    unsigned int width, height, rows, cols, cellDim;
+    unsigned int width, height, rows, cols, cellDim, gameDuration, timeLeft;
     Maze maze;
     Player player;
     Imposter imposter;
+    bool lights;
 
-    Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, unsigned int colsVal, unsigned int cellDimVal);
+    Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, unsigned int colsVal, unsigned int cellDimVal, unsigned int timeLimitVal);
     ~Game();
 
     void Init();
     void ProcessInput(float dt);
-    void Update(float dt);
+    void Update(float dt, int clockTime);
     void Render();
     void toggleLights();
 
 private:
-    bool lights;
     bool initiatedLightClick;
+    bool scoreUpdated;
 };
 
 #endif

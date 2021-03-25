@@ -20,11 +20,11 @@ Task *releaseItems = nullptr;
 Task *finishLine = nullptr;
 
 CollectablesContainer *container = nullptr;
-Game::Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, unsigned int colsVal, unsigned int cellDimVal)
+Game::Game(unsigned int widthVal, unsigned int heightVal, unsigned int rowsVal, unsigned int colsVal, unsigned int cellDimVal, unsigned int timeLimitVal)
     : State(GAME_ACTIVE), Keys(std::vector<bool>(1024)), width(widthVal), height(heightVal), rows(rowsVal), cols(colsVal), cellDim(cellDimVal), lights(true),
       maze(Maze(rows, cols, width, height, cellDim)), player(Player((float)cellDim, 128, 205, 50, 240, 248, 255, 5)),
-      imposter(Imposter((float)cellDim, 255, 0, 0, 240, 248, 255, rows, cols)),
-      initiatedLightClick(false)
+      imposter(Imposter((float)cellDim, 255, 0, 0, 240, 248, 255, rows, cols)), gameDuration(timeLimitVal), timeLeft(timeLimitVal),
+      initiatedLightClick(false), scoreUpdated(false)
 {
     vaporizeImposter = new Task(cellDim, 255, 69, 0, rows, cols, false);
     releaseItems = new Task(cellDim, 0, 117, 117, rows, cols, false);
@@ -100,15 +100,25 @@ void Game::ProcessInput(float dt)
     }
 }
 
-void Game::Update(float dt)
+void Game::Update(float dt, int clockTime)
 {
+    timeLeft = gameDuration - clockTime;
+    if (timeLeft <= 0)
+        State = GAME_LOST;
+    if (clockTime > 0 && clockTime % 2 == 0 && !scoreUpdated)
+    {
+        player.score += (lights ? 1 : 5);
+        scoreUpdated = true;
+    }
+    else if (clockTime % 2 != 0)
+        scoreUpdated = false;
     if (container->collectablesReleased)
     {
         for (Gem &gem : container->gems)
             if (!gem.collected && player.i == gem.i && player.j == gem.j)
             {
                 gem.collected = true;
-                player.score++;
+                player.score += 25;
             }
 
         for (Bomb &bomb : container->bombs)
@@ -119,15 +129,9 @@ void Game::Update(float dt)
             }
     }
     if (player.lives < 1)
-    {
-        std::cout << "Game Lost\n" << "Score: " << player.score << "\n";
         State = GAME_LOST;
-    }
     if (player.i == finishLine->i && player.j == finishLine->j && player.tasksCompleted == 2)
-    {
-        std::cout << "Game Won\n" << "Score: " << player.score << "\n";
         State = GAME_WON;
-    }
     if (player.i == vaporizeImposter->i && player.j == vaporizeImposter->j && imposter.active)
     {
         imposter.active = false;
@@ -143,10 +147,7 @@ void Game::Update(float dt)
     {
         imposter.computeStep(maze, player, dt);
         if (imposter.i == player.i && imposter.j == player.j)
-        {
-            std::cout << "Game Lost\n" << "Score: " << player.score << "\n";
             State = GAME_LOST;
-        }
     }
 }
 
