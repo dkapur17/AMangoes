@@ -152,9 +152,9 @@ std::vector<Vertex> Maze::getVertices()
 {
     std::vector<Vertex> vertices;
 
-    for (auto row : grid)
+    for (std::vector<Cell> row : grid)
     {
-        for (auto c : row)
+        for (Cell c : row)
         {
             if (c.walls["top"])
             {

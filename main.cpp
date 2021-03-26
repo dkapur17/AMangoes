@@ -67,7 +67,7 @@ int main(int argc, char **argv)
 
     AMangoes.Init();
 
-    auto startTime = std::chrono::_V2::high_resolution_clock().now();
+    std::chrono::_V2::high_resolution_clock::time_point startTime = std::chrono::_V2::high_resolution_clock().now();
 
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
@@ -77,7 +77,7 @@ int main(int argc, char **argv)
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        auto currentTime = std::chrono::_V2::high_resolution_clock().now();
+        std::chrono::_V2::high_resolution_clock::time_point currentTime = std::chrono::_V2::high_resolution_clock().now();
         std::chrono::duration<float> clockDuration = currentTime - startTime;
         int clockTime = (int)clockDuration.count();
         glfwPollEvents();
