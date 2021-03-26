@@ -8,9 +8,14 @@
 make
 ./amangoes
 ```
+##### Build Requirements
+1. OpenGL 3.3
+2. GLAD
+3. GLFW
+
 ### Gameplay
 
-You are the Green Among Us character dropped in a maze. You need to complete the required tasks and find the exit before you die. Use your arrow keys to navigate around the maze.
+You are the Green Among Us character dropped into a maze. You need to complete the required tasks and find the exit before you die. Use your arrow keys to navigate around the maze.
 
 ##### Ways to Die
 * The time runs out (You have 180 seconds).
@@ -18,8 +23,10 @@ You are the Green Among Us character dropped in a maze. You need to complete the
 * You get caught by the Imposter (Red Among Us character).
 
 #### Tasks
-1. Find and get to the Orange Tile in the maze to vaporize the Imposter before it kills you.
-2. Find and get to the Cyan Tile in the maze to release Gems and Bombs into the Maze.
+* Find and get to the Orange Tile in the maze to vaporize the Imposter before it kills you.
+* Find and get to the Cyan Tile in the maze to release Gems and Bombs into the Maze.
+
+The tasks can be completed in any order.
 
 #### Exit
 Once you have completed the above two tasks, an Exit randomly spawns somewhere in the maze. It is marked as a Blue Rhombus. Get to the exit with more than 0 lives and before the time runs out to win the game.
