@@ -1,8 +1,9 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <iostream>
-#include <ctime>
+#include <chrono>
 #include <cstdio>
+#include <sstream>
 
 #define GLT_IMPLEMENTATION
 #include "lib/glText.h"
@@ -10,8 +11,8 @@
 #include "utils/game.hpp"
 #include "utils/resource_manager.hpp"
 
-#define SCREEN_WIDTH 800
-#define SCREEN_HEIGHT 800
+#define SCREEN_WIDTH 750
+#define SCREEN_HEIGHT 750
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -33,7 +34,7 @@ int main(int argc, char **argv)
         glfwTerminate();
         return -1;
     }
-
+    glfwSetWindowPos(window, 100, 0);
     glfwMakeContextCurrent(window);
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
@@ -49,7 +50,7 @@ int main(int argc, char **argv)
         return -1;
     }
     GLTtext *onScreenText = gltCreateText();
-    char textContent[500];
+    std::stringstream textContent;
 
     GLTtext *victoryText = gltCreateText();
     gltSetText(victoryText, "Victory");
@@ -66,6 +67,8 @@ int main(int argc, char **argv)
 
     AMangoes.Init();
 
+    auto startTime = std::chrono::_V2::high_resolution_clock().now();
+
     float deltaTime = 0.0f;
     float lastFrame = 0.0f;
 
@@ -74,7 +77,9 @@ int main(int argc, char **argv)
         float currentFrame = glfwGetTime();
         deltaTime = currentFrame - lastFrame;
         lastFrame = currentFrame;
-        int clockTime = clock() / CLOCKS_PER_SEC;
+        auto currentTime = std::chrono::_V2::high_resolution_clock().now();
+        std::chrono::duration<float> clockDuration = currentTime - startTime;
+        int clockTime = (int)clockDuration.count();
         glfwPollEvents();
 
         if (AMangoes.State == GAME_ACTIVE)
@@ -82,8 +87,13 @@ int main(int argc, char **argv)
             AMangoes.ProcessInput(deltaTime);
             AMangoes.Update(deltaTime, clockTime);
         }
-        sprintf(textContent, "Time Left: %d\nLives: %d\nScore: %d\nLights: %s\nTasks Completed: %d/2", AMangoes.timeLeft, AMangoes.player.lives, AMangoes.player.score, (AMangoes.lights ? "On" : "Off"), AMangoes.player.tasksCompleted);
-        gltSetText(onScreenText, textContent);
+        textContent.str(std::string());
+        textContent << "Time Left: " << AMangoes.timeLeft << "\n";
+        textContent << "Score: " << AMangoes.player.score << "\n";
+        textContent << "Lives: " << AMangoes.player.lives << "\n";
+        textContent << "Lights: " << (AMangoes.lights ? "On" : "Off") << "\n";
+        textContent << "Tasks Completed: " << AMangoes.player.tasksCompleted << "/2";
+        gltSetText(onScreenText, textContent.str().c_str());
         glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         if (AMangoes.State == GAME_ACTIVE)
@@ -93,18 +103,19 @@ int main(int argc, char **argv)
         if (AMangoes.State == GAME_ACTIVE)
         {
             gltColor(1.0f, 1.0f, 1.0f, 1.0f);
-            gltDrawText2D(onScreenText, 0.0f, 0.0f, 1.0f);
+            gltDrawText2D(onScreenText, 3.0f, 3.0f, 1.0f);
         }
         else if (AMangoes.State == GAME_WON)
         {
-            sprintf(textContent, "Final Score: %d", AMangoes.player.score);
+            textContent.str(std::string());
+            textContent << "Final Score: " << AMangoes.player.score;
             gltColor(0.0f, 1.0f, 0.0f, 1.0f);
             gltDrawText2DAligned(victoryText,
                                  (GLfloat)(SCREEN_WIDTH / 2),
                                  (GLfloat)(SCREEN_HEIGHT / 4),
                                  7.0f,
                                  GLT_CENTER, GLT_CENTER);
-            gltSetText(onScreenText, textContent);
+            gltSetText(onScreenText, textContent.str().c_str());
             gltColor(1.0f, 1.0f, 1.0f, 1.0f);
             gltDrawText2DAligned(onScreenText,
                                  (GLfloat)(SCREEN_WIDTH / 2),
@@ -114,14 +125,15 @@ int main(int argc, char **argv)
         }
         else
         {
-            sprintf(textContent, "Final Score: %d", AMangoes.player.score);
+            textContent.str(std::string());
+            textContent << "Final Score: " << AMangoes.player.score;
             gltColor(1.0f, 0.0f, 0.0f, 1.0f);
             gltDrawText2DAligned(defeatText,
                                  (GLfloat)(SCREEN_WIDTH / 2),
                                  (GLfloat)(SCREEN_HEIGHT / 4),
                                  7.0f,
                                  GLT_CENTER, GLT_CENTER);
-            gltSetText(onScreenText, textContent);
+            gltSetText(onScreenText, textContent.str().c_str());
             gltColor(1.0f, 1.0f, 1.0f, 1.0f);
             gltDrawText2DAligned(onScreenText,
                                  (GLfloat)(SCREEN_WIDTH / 2),

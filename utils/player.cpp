@@ -82,7 +82,7 @@ std::vector<Vertex> Player::getVertices()
     // Head
     for (float x = -0.6; x <= 0.61; x += 0.012)
     {
-        float y = -(sqrt((0.5 * 0.5) * (std::max((0.60 * 0.60) - (x * x), 0.0)) / (0.60 * 0.60)) + 0.5);
+        float y = -(std::sqrt((0.5 * 0.5) * (std::max((0.60 * 0.60) - (x * x), 0.0)) / (0.60 * 0.60)) + 0.5);
         vertices.push_back(Vertex{x, y, Rb, Gb, Bb});
     }
     // Glasses

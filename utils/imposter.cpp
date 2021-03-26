@@ -9,8 +9,8 @@
 Imposter::Imposter(float stepSizeVal, int rBody, int gBody, int bBody, int rGlass, int gGlass, int bGlass, int rows, int cols)
     : stepSize(stepSizeVal), Rb(rBody), Gb(gBody), Bb(bBody), Rg(rGlass), Gg(gGlass), Bg(bGlass), active(true)
 {
-    i = RandomEngine::randomInt(0, rows - 1);
-    j = RandomEngine::randomInt(0, cols - 1);
+    i = RandomEngine::randomInt(5, rows - 1);
+    j = RandomEngine::randomInt(5, cols - 1);
 
     position = glm::vec3((2 * j + 1) * stepSize / 2, (2 * i + 1) * stepSize / 2, 0);
 }

@@ -50,5 +50,5 @@ obj/tile_renderer.o: utils/tile_renderer.cpp
 	g++ -c utils/tile_renderer.cpp
 
 clean:
-	rm -r ./obj/*.o
+	rm -r ./obj
 	rm ./a.out

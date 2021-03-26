@@ -1,7 +1,5 @@
 #include <iostream>
 #include <stack>
-#include <cstdlib>
-#include <ctime>
 #include <string>
 
 #include "maze.hpp"
@@ -73,12 +71,7 @@ void Maze::Generate()
                     walledNeighbours.push_back(&grid[i][j + 1]);
 
                 if (walledNeighbours.size())
-                {
-                    std::random_device rd;
-                    std::default_random_engine re(rd());
-                    std::shuffle(std::begin(walledNeighbours), std::end(walledNeighbours), re);
-                    removeWalls(current, walledNeighbours[0]);
-                }
+                    removeWalls(current, walledNeighbours[RandomEngine::randomInt(0, walledNeighbours.size() - 1)]);
             }
             current->visited = false;
         }
