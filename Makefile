@@ -1,8 +1,8 @@
 main: obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/item_renderer.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o
 	mkdir -p obj
 	mv *.o ./obj | true
-	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/item_renderer.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
-	chmod +x a.out
+	g++ -g obj/main.o obj/glad.o obj/character_renderer.o obj/collectables.o obj/game.o obj/imposter.o obj/item_renderer.o obj/maze_renderer.o obj/maze.o obj/player.o obj/random_engine.o obj/resource_manager.o obj/shader.o obj/task.o obj/tile_renderer.o -o amangoes -lglfw3 -lGL -lX11 -lpthread -lXrandr -lXi -ldl
+	chmod +x amangoes
 
 obj/main.o: main.cpp
 	g++ -c main.cpp
@@ -51,4 +51,4 @@ obj/tile_renderer.o: utils/tile_renderer.cpp
 
 clean:
 	rm -r ./obj
-	rm ./a.out
+	rm ./amangoes

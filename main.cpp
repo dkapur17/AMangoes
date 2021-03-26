@@ -11,8 +11,8 @@
 #include "utils/game.hpp"
 #include "utils/resource_manager.hpp"
 
-#define SCREEN_WIDTH 750
-#define SCREEN_HEIGHT 750
+#define SCREEN_WIDTH 780
+#define SCREEN_HEIGHT 780
 
 void framebuffer_size_callback(GLFWwindow *window, int width, int height);
 void key_callback(GLFWwindow *window, int key, int scancode, int action, int mode);
@@ -88,7 +88,7 @@ int main(int argc, char **argv)
             AMangoes.Update(deltaTime, clockTime);
         }
         textContent.str(std::string());
-        textContent << "Time Left: " << AMangoes.timeLeft << "\n";
+        textContent << "Time Left: " << AMangoes.timeLeft << "s\n";
         textContent << "Score: " << AMangoes.player.score << "\n";
         textContent << "Lives: " << AMangoes.player.lives << "\n";
         textContent << "Lights: " << (AMangoes.lights ? "On" : "Off") << "\n";
