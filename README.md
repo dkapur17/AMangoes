@@ -2,6 +2,10 @@
 
 ## AMangoes: A cheezy rip off of Among Us.
 
+<img src="./Misc/Amangoes.gif" width="500px"/>
+
+##### Red Boi is Sussy Baka
+
 ### Build and Run
 
 ```
